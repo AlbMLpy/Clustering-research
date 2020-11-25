@@ -84,7 +84,8 @@ class LocalSpectral:
                 cond_help = cond
                 self.s = s
                 
-        assert self.s != None
+        if self.s == None:
+            raise Error("\nFound empty cluster, change parameters\n")
     
     
     def process(self, u, k=15, tol=0.00001, err=0.001, n_iter = 10000, shift=0.001):
@@ -180,7 +181,7 @@ def draw2d(data, c=None, s=None):
         plt.scatter(data[s][:, 0], data[s][:, 1], c='red')
         
 
-def plot_results(data, labels, local_labels, name_global, names_local):
+def plot_results(data, labels, local_labels, name_global, names_local, file):
     """
         It is just convenient function to plot the results.
         
@@ -228,7 +229,7 @@ def plot_results(data, labels, local_labels, name_global, names_local):
     axs[1, 1].set_title(f'{names_local[3]}')
     axs[1, 1].scatter(data[:, 0], data[:, 1], c=labels)
     axs[1, 1].scatter(data[local_labels[3]][:, 0], data[local_labels[3]][:, 1], c='red')        
-
+    fig.savefig(file)
     
 def metric(local, target, label):
     """
